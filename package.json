@@ -1,9 +1,14 @@
 {
   "name": "gitbook-plugin-styleguide",
   "description": "Styleguide generator for Gitbook",
+  "license": "MIT",
+  "author": "Yannick Huard",
+  "keywords": [
+    "styleguide",
+    "gitbook"
+  ],
   "main": "index.js",
   "version": "0.1.0",
-  "private": true,
   "engines": {
     "gitbook": ">=2.x.x"
   },
