@@ -1,0 +1,12 @@
+---
+  env:
+    node: true
+  extends: xo
+  rules:
+    semi:
+      - 2
+      - always
+    indent:
+      - 2
+      - 2
+    no-case-declarations: 0

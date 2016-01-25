@@ -1,0 +1,49 @@
+<iframe id="{{ id }}frame" class="is-loading" src="{{ url }}" scrolling="no" onload="return iframeLoaded(this);"></iframe>
+
+<div class="styleguide tabs">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#{{ id }}markup" data-toggle="tab">HTML</a>
+        </li>
+        {% if styles.length > 0 or scripts.length > 0 %}
+        <li role="presentation" class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            Sources <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            {% if styles.length > 0 %}
+            <li class="dropdown-header">Styles</li>
+            {% for style in styles %}
+            <li><a href="#{{ id }}{{ loop.index }}styles" data-toggle="tab">{{ style.file | escape }}</a></li>
+            {% endfor %}
+            {% endif %}
+            {% if scripts.length > 0 %}
+            <li class="dropdown-header">Scripts</li>
+            {% for script in scripts %}
+            <li><a href="#{{ id }}{{ loop.index }}-scripts" data-toggle="tab">{{ script.file | escape }}</a></li>
+            {% endfor %}
+            {% endif %}
+          </ul>
+        </li>
+        {% endif %}
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="{{ id }}markup">
+            <pre><code class="lang-html">{{ markup | escape }}</code></pre>
+        </div>
+        {% if styles.length > 0%}
+        {% for style in styles %}
+        <div class="tab-pane" id="{{ id }}{{ loop.index }}styles">
+            <pre><code class="lang-scss">{{ style.content | escape }}</code></pre>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% if scripts.length > 0%}
+        {% for script in scripts %}
+        <div class="tab-pane" id="{{ id }}{{ loop.index }}-scripts">
+            <pre><code class="lang-javascript">{{ script.content | escape }}</code></pre>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
