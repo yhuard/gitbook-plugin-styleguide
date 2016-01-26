@@ -8,10 +8,6 @@ var q = require('q');
 var mkdirp = require('mkdirp');
 var defaults = require('lodash/defaults');
 
-var env = new nunjucks.Environment(new nunjucks.FileSystemLoader(), {
-  autoescape: false
-});
-
 function template(tpl, id, currentFile, config) {
   try {
     return q()
@@ -20,6 +16,9 @@ function template(tpl, id, currentFile, config) {
       })
       .then(function processTemplate(data) {
         var content = {};
+        var env = new nunjucks.Environment(new nunjucks.FileSystemLoader(), {
+          autoescape: false
+        });
 
         content = fm(data);
         content.body = content.body || '';
@@ -37,17 +36,16 @@ function template(tpl, id, currentFile, config) {
             content.attributes.demo.scripts : [content.attributes.demo.scripts];
         }
 
+        var templateOutputFile = path.resolve(config.dest, path.dirname(currentFile), tpl);
         var templateContent = env.render(path.resolve(__dirname, './templates/frame.html'), {
           content: content.body,
           styles: frameStyles,
-          scripts: frameScripts
+          scripts: frameScripts,
+          staticBase: path.relative(path.dirname(templateOutputFile), config.dest)
         });
 
-        mkdirp.sync(path.resolve(config.dest, path.dirname(currentFile), path.dirname(tpl)));
-        fs.writeFileSync(
-          path.resolve(config.dest, path.dirname(currentFile), tpl),
-          templateContent
-        );
+        mkdirp.sync(path.dirname(templateOutputFile));
+        fs.writeFileSync(templateOutputFile, templateContent);
         // End of: Generate template (frame)
 
         // Get sources (SCSS, JS)
@@ -117,7 +115,6 @@ module.exports = {
   blocks: {
     styleguide: {
       process: function process(blk) {
-        // env = this.env
         var that = this;
         var filename = blk.args[0];
         var id = blk.kwargs.id ? blk.kwargs.id + '-' : '';
