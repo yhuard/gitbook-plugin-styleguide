@@ -1,12 +1,7 @@
 ---
   env:
     node: true
-  extends: xo
+  extends: airbnb/legacy
   rules:
-    semi:
-      - 2
-      - always
-    indent:
-      - 2
-      - 2
-    no-case-declarations: 0
+    comma-dangle: 0
+    vars-on-top: 0

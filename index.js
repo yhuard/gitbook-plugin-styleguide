@@ -1,13 +1,106 @@
 'use strict';
 
-const nunjucks = require('nunjucks');
-const path = require('path');
-const fm = require('front-matter');
-const fs = require('fs');
+var nunjucks = require('nunjucks');
+var path = require('path');
+var fm = require('front-matter');
+var fs = require('fs');
+var q = require('q');
+var mkdirp = require('mkdirp');
+var defaults = require('lodash/defaults');
 
-const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(), {
+var env = new nunjucks.Environment(new nunjucks.FileSystemLoader(), {
   autoescape: false
 });
+
+function template(tpl, id, currentFile, config) {
+  try {
+    return q()
+      .then(function readTemplate() {
+        return fs.readFileSync(path.resolve(config.base, path.dirname(currentFile), tpl), 'utf8');
+      })
+      .then(function processTemplate(data) {
+        var content = {};
+
+        content = fm(data);
+        content.body = content.body || '';
+        content.attributes = content.attributes || {};
+
+        // Generate template (frame)
+        var frameStyles = [];
+        if (content.attributes.demo && content.attributes.demo.styles) {
+          frameStyles = Array.isArray(content.attributes.demo.styles) ?
+            content.attributes.demo.styles : [content.attributes.demo.styles];
+        }
+        var frameScripts = [];
+        if (content.attributes.demo && content.attributes.demo.scripts) {
+          frameScripts = Array.isArray(content.attributes.demo.scripts) ?
+            content.attributes.demo.scripts : [content.attributes.demo.scripts];
+        }
+
+        var templateContent = env.render(path.resolve(__dirname, './templates/frame.html'), {
+          content: content.body,
+          styles: frameStyles,
+          scripts: frameScripts
+        });
+
+        mkdirp.sync(path.resolve(config.dest, path.dirname(currentFile), path.dirname(tpl)));
+        fs.writeFileSync(
+          path.resolve(config.dest, path.dirname(currentFile), tpl),
+          templateContent
+        );
+        // End of: Generate template (frame)
+
+        // Get sources (SCSS, JS)
+        var scriptsToInclude = [];
+        if (content.attributes.src && content.attributes.src.scripts) {
+          scriptsToInclude = Array.isArray(content.attributes.src.scripts) ?
+            content.attributes.src.scripts : [content.attributes.src.scripts];
+        }
+        var scripts = [];
+        scriptsToInclude.forEach(function readNextFile(file) {
+          var scriptContent = fs.readFileSync(
+            path.resolve(config.base, path.dirname(currentFile), path.dirname(tpl), file)
+          );
+          scripts.push({
+            content: scriptContent,
+            file: path.basename(file)
+          });
+        });
+
+        var stylesToInclude = [];
+        if (content.attributes.src && content.attributes.src.styles) {
+          stylesToInclude = Array.isArray(content.attributes.src.styles) ?
+            content.attributes.src.styles : [content.attributes.src.styles];
+        }
+        var styles = [];
+        stylesToInclude.forEach(function readNextFile(file) {
+          var scriptContent = fs.readFileSync(
+            path.resolve(config.base, path.dirname(currentFile), path.dirname(tpl), file)
+          );
+          styles.push({
+            content: scriptContent,
+            file: path.basename(file)
+          });
+        });
+
+        // Render the whole styleguide section
+        return env.render(path.resolve(__dirname, './templates/website.html'), {
+          markup: content.body,
+          scripts: scripts,
+          styles: styles,
+          id: id,
+          url: tpl
+        });
+      })
+      .catch(function logError(err) {
+        console.log(err);
+        process.exit(1);
+      });
+  } catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
+}
 
 module.exports = {
   website: {
@@ -23,69 +116,32 @@ module.exports = {
   },
   blocks: {
     styleguide: {
-      process: function (blk) {
+      process: function process(blk) {
+        // env = this.env
+        var that = this;
+        var filename = blk.args[0];
+        var id = blk.kwargs.id ? blk.kwargs.id + '-' : '';
+
+        var config = defaults(this.book.config.get('pluginsConfig.styleguide'), {
+          base: this.book.root,
+          dest: this.book.options.output
+        });
+
         if (this.generator === 'website') {
-          const tpl = blk.kwargs.tpl;
-          const id = blk.kwargs.id ? blk.kwargs.id + '-' : '';
-          return template(tpl, id);
+          return q()
+            .then(function write() {
+              return template(filename, id, that.ctx.file.path, config);
+            });
         }
 
-        var body = blk.body.trim();
-        return '<pre>' + escape(body) + '</pre>';
+        return q()
+          .then(function read() {
+            return fs.readFileSync(config.base, path.dirname(that.ctx.file.path), filename, 'utf8');
+          })
+          .then(function write(content) {
+            return '<pre><code class="lang-html">' + content + '</code></pre>';
+          });
       }
     }
   }
 };
-
-function template(tpl, id) {
-  try {
-    var buildFile = path.basename(tpl);
-    var data = fs.readFileSync(tpl, 'utf8');
-    var content = {};
-
-    content = fm(data);
-    content.body = content.body || '';
-    content.attributes = content.attributes || {};
-
-    // Get sources (SCSS, JS)
-    var scriptsToInclude = [];
-    if (content.attributes.src && content.attributes.src.scripts) {
-      scriptsToInclude = Array.isArray(content.attributes.src.scripts) ?
-        content.attributes.src.scripts : [content.attributes.src.scripts];
-    }
-    var scripts = [];
-    scriptsToInclude.forEach(file => {
-      var scriptContent = fs.readFileSync(path.resolve(tpl, '..', file));
-      scripts.push({
-        content: scriptContent,
-        file: path.basename(file)
-      });
-    });
-
-    var stylesToInclude = [];
-    if (content.attributes.src && content.attributes.src.styles) {
-      stylesToInclude = Array.isArray(content.attributes.src.styles) ?
-        content.attributes.src.styles : [content.attributes.src.styles];
-    }
-    var styles = [];
-    stylesToInclude.forEach(file => {
-      var scriptContent = fs.readFileSync(path.resolve(tpl, '..', file));
-      styles.push({
-        content: scriptContent,
-        file: path.basename(file)
-      });
-    });
-
-    // Render the whole styleguide section
-    return env.render(path.resolve(__dirname, './templates/website.html'), {
-      markup: content.body,
-      scripts: scripts,
-      styles: styles,
-      id: id,
-      url: '/templates/' + buildFile
-    });
-  } catch (err) {
-    console.log(err);
-    process.exit(1);
-  }
-}
