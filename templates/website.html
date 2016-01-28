@@ -1,6 +1,8 @@
-<iframe id="{{ id }}frame" class="is-loading" src="{{ url }}" scrolling="no" onload="return iframeLoaded(this);"></iframe>
-
-<div class="styleguide tabs">
+<div class="styleguide">
+  <div class="preview">
+    <iframe id="{{ id }}frame" class="is-loading" src="{{ url }}" scrolling="no" onload="return iframeLoaded(this);"></iframe>
+  </div>
+  <div class="tabs">
     <ul class="nav nav-tabs">
         <li class="active">
             <a href="#{{ id }}markup" data-toggle="tab">HTML</a>
@@ -46,4 +48,5 @@
         {% endfor %}
         {% endif %}
     </div>
+  </div>
 </div>
