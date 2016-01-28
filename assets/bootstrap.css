@@ -176,7 +176,6 @@ tbody.collapse.in {
 .dropup .dropdown-menu, .navbar-fixed-bottom .dropdown .dropdown-menu {
   top: auto;
   bottom: 100%;
-  /*margin-bottom: 2px;*/
 }
 @media (min-width: 768px) {
   .navbar-right .dropdown-menu {
@@ -209,15 +208,13 @@ tbody.collapse.in {
 .nav > li.disabled > a {
   color: #777777;
 }
-.nav > li.disabled > a:hover,
-/*.nav > li.disabled > a:focus*/ {
+.nav > li.disabled > a:hover {
   color: #777777;
   text-decoration: none;
   background-color: transparent;
   cursor: not-allowed;
 }
-.nav .open > a, .nav .open > a:hover,
-/*.nav .open > a:focus*/ {
+.nav .open > a, .nav .open > a:hover {
   background-color: #eeeeee;
   border-color: #337ab7;
 }
@@ -246,8 +243,7 @@ tbody.collapse.in {
   background-color: #ffffff;
   border-bottom: 5px solid #dddddd;
 }
-.nav-tabs > li.active > a:hover
-/*.nav-tabs > li.active > a:focus*/ {
+.nav-tabs > li.active > a:hover {
   border-bottom: 5px solid #4183c4;
 }
 .nav-tabs > li.open > a, .nav-tabs > li.open > a:hover {
@@ -319,7 +315,6 @@ tbody.collapse.in {
 }
 .styleguide .tab-content pre {
   margin-bottom: 0px !important;
-  /*max-height: 400px;*/
 }
 .styleguide .nav {
   border-bottom: 1px solid #ddd;
@@ -327,21 +322,18 @@ tbody.collapse.in {
 .styleguide iframe {
   border: none;
   width: 100%;
-  height: 0px;
+  height: 0;
 }
-.styleguide iframe.is-loading {
+.styleguide iframe.lazy {
   display: none;
 }
-
 .styleguide .dropdown-menu > li.active {
   background-color: #eee;
 }
-
 .styleguide .dropdown-menu > li > a {
   padding: 3px 15px;
 }
-
-..styleguide dropdown-header {
+.styleguide .dropdown-header {
   padding: 3px 15px;
   font-size: 13px !important;
 }
