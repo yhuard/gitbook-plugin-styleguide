@@ -7,7 +7,7 @@ This plugin is meant to be used to generate the styleguide for European Commissi
 In the documentation, you can call the the plugin with the following syntax:
 
 ```markdown
-{% styleguide tpl='./templates/breadcrumb.html' %}{% endstyleguide %}
+{% styleguide './templates/breadcrumb.html' %}{% endstyleguide %}
 ```
 
 And here's how a template file should look like:
@@ -34,4 +34,18 @@ src:
     </li>
   </ol>
 </nav>
+```
+
+You can provide a custom configuration to the plugin in your book.json. Here's the one we use in EC:
+
+```json
+{
+  ...
+  "pluginsConfig": {
+    "styleguide": {
+      "base": "src",
+      "frame": "./tpl/frame.html"
+    }
+  }
+}
 ```
