@@ -1,22 +1,10 @@
 <!doctype html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Next EUROPA Theme</title>
-  <meta name="author" content="EC Europa">
-{% for style in styles %}
-  <link rel="stylesheet" href="{{ style }}">
-{% endfor %}
-  <!--[if lt IE 9]>
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
 </head>
 <body>
-{{ content | safe }}
-{% for script in scripts %}
-  <script src="{{ script }}"></script>
-{% endfor %}
+  {{ content | safe }}
   <script src="{{ staticBase }}/gitbook/plugins/gitbook-plugin-styleguide/iframeResizer.contentWindow.js"></script>
 </body>
 </html>

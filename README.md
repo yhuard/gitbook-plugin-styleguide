@@ -7,7 +7,7 @@ This plugin is meant to be used to generate the styleguide for European Commissi
 In the documentation, you can call the the plugin with the following syntax:
 
 ```markdown
-{% styleguide tpl='./templates/breadcrumb.html', id='breadcrumb' %}{% endstyleguide %}
+{% styleguide tpl='./templates/breadcrumb.html' %}{% endstyleguide %}
 ```
 
 And here's how a template file should look like:
@@ -19,10 +19,6 @@ src:
   styles:
     - '../styles/_settings.scss'
     - '../styles/_objects.scss'
-demo:
-  styles:
-    - '../styles/core.css'
-    - '../styles/breadcrumb.css'
 ---
 <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
   <span class="element-invisible">You are here:</span>

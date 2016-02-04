@@ -8,7 +8,7 @@ var q = require('q');
 var mkdirp = require('mkdirp');
 var defaults = require('lodash/defaults');
 
-function template(tpl, id, currentFile, config) {
+function template(tpl, id, currentFile, config, book) {
   try {
     return q()
       .then(function readTemplate() {
@@ -25,22 +25,13 @@ function template(tpl, id, currentFile, config) {
         content.attributes = content.attributes || {};
 
         // Generate template (frame)
-        var frameStyles = [];
-        if (content.attributes.demo && content.attributes.demo.styles) {
-          frameStyles = Array.isArray(content.attributes.demo.styles) ?
-            content.attributes.demo.styles : [content.attributes.demo.styles];
-        }
-        var frameScripts = [];
-        if (content.attributes.demo && content.attributes.demo.scripts) {
-          frameScripts = Array.isArray(content.attributes.demo.scripts) ?
-            content.attributes.demo.scripts : [content.attributes.demo.scripts];
-        }
-
         var templateOutputFile = path.resolve(config.dest, path.dirname(currentFile), tpl);
-        var templateContent = env.render(path.resolve(__dirname, './templates/frame.html'), {
+        var frameFile = path.isAbsolute(config.frame) ?
+          config.frame :
+          path.resolve(book.root, config.frame);
+
+        var templateContent = env.render(frameFile, {
           content: content.body,
-          styles: frameStyles,
-          scripts: frameScripts,
           staticBase: path.relative(path.dirname(templateOutputFile), config.dest)
         });
 
@@ -117,17 +108,18 @@ module.exports = {
       process: function process(blk) {
         var that = this;
         var filename = blk.args[0];
-        var id = blk.kwargs.id ? blk.kwargs.id + '-' : '';
+        var id = path.basename(filename, '.html') + '-';
 
         var config = defaults(this.book.config.get('pluginsConfig.styleguide'), {
           base: this.book.root,
-          dest: this.book.options.output
+          dest: this.book.options.output,
+          frame: path.resolve(__dirname, './templates/frame.html')
         });
 
         if (this.generator === 'website') {
           return q()
             .then(function write() {
-              return template(filename, id, that.ctx.file.path, config);
+              return template(filename, id, that.ctx.file.path, config, that.book);
             });
         }
 
