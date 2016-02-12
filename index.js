@@ -21,7 +21,7 @@ function template(tpl, id, currentFile, config, book) {
         });
 
         content = fm(data);
-        content.body = content.body || '';
+        content.body = env.renderString(content.body).trim() || '';
         content.attributes = content.attributes || {};
 
         // Generate template (frame)
