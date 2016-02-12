@@ -8,7 +8,7 @@
     "gitbook"
   ],
   "main": "index.js",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "engines": {
     "gitbook": ">=2.5.0"
   },
@@ -18,8 +18,8 @@
     "url": "https://github.com/yhuard/gitbook-plugin-styleguide.git"
   },
   "dependencies": {
-    "front-matter": "^2.0.5",
-    "lodash": "^4.2.1",
+    "front-matter": "^2.0.6",
+    "lodash": "^4.3.0",
     "mkdirp": "^0.5.1",
     "nunjucks": "^2.3.0",
     "q": "~1.4.1"
