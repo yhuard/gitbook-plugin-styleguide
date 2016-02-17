@@ -32,6 +32,7 @@ function template(tpl, id, currentFile, config, book) {
 
         var templateContent = env.render(frameFile, {
           content: content.body,
+          js: content.attributes.js || '',
           staticBase: path.relative(path.dirname(templateOutputFile), config.dest)
         });
 
@@ -75,6 +76,7 @@ function template(tpl, id, currentFile, config, book) {
         // Render the whole styleguide section
         return env.render(path.resolve(__dirname, './templates/website.html'), {
           markup: content.body,
+          js: content.attributes.js || '',
           scripts: scripts,
           styles: styles,
           id: id,

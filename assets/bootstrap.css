@@ -80,7 +80,7 @@ tbody.collapse.in {
   float: left;
   min-width: 160px;
   padding: 5px 0 !important;
-  margin: 0 !important;
+  margin: 0 0 30px !important;
   list-style: none;
   font-size: 14px !important;
   text-align: left;
@@ -337,4 +337,8 @@ tbody.collapse.in {
 .styleguide .dropdown-header {
   padding: 3px 15px;
   font-size: 13px !important;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal {
+  overflow: visible;
 }

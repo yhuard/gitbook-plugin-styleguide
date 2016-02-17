@@ -7,6 +7,11 @@
         <li class="active">
             <a href="#{{ id }}markup" data-toggle="tab">HTML</a>
         </li>
+        {% if js %}
+        <li>
+            <a href="#{{ id }}js" data-toggle="tab">JS</a>
+        </li>
+        {% endif %}
         {% if styles.length > 0 or scripts.length > 0 %}
         <li role="presentation" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -33,6 +38,11 @@
         <div class="tab-pane active" id="{{ id }}markup">
             <pre><code class="lang-html">{{ markup | escape }}</code></pre>
         </div>
+        {% if js %}
+        <div class="tab-pane" id="{{ id }}js">
+            <pre><code class="lang-javascript">{{ js | escape }}</code></pre>
+        </div>
+        {% endif %}
         {% if styles.length > 0%}
         {% for style in styles %}
         <div class="tab-pane" id="{{ id }}{{ loop.index }}styles">
