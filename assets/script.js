@@ -12,11 +12,14 @@ require(["gitbook"], function(gitbook) {
       $(this).removeAttr('data-src');
       return src;
     });
+
+    var isOldIE = (navigator.userAgent.indexOf("MSIE") !== -1); // Detect IE10 and below
     iframes.on('load', function() {
       $(this).removeClass('lazy');
       $(this).iFrameResize({
-        heightCalculationMethod: 'max',
-        autoResize: false
+        heightCalculationMethod: isOldIE ? 'max' : 'lowestElement',
+        autoResize: true,
+        scrolling: true
       });
     });
   }
