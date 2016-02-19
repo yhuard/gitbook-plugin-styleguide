@@ -99,9 +99,11 @@ module.exports = {
     js: [
       'bootstrap.js',
       'iframeResizer.js',
+      'lity.min.js',
       'script.js'
     ],
     css: [
+      'lity.min.css',
       'bootstrap.css'
     ]
   },

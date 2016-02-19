@@ -13,10 +13,30 @@ require(["gitbook"], function(gitbook) {
       return src;
     });
 
+    // Handles devices sizes
+    $('a[data-toggle="pill"]').on('click', function(e) {
+      var frameId = $(this).attr('data-trigger');
+      var width = $(this).attr('data-width');
+      $('#' + frameId).width(width);
+    });
+
     var isOldIE = (navigator.userAgent.indexOf("MSIE") !== -1); // Detect IE10 and below
+
     iframes.on('load', function() {
       $(this).removeClass('lazy');
       $(this).iFrameResize({
+        heightCalculationMethod: isOldIE ? 'max' : 'lowestElement',
+        autoResize: true,
+        scrolling: true
+      });
+    });
+
+    // Lightboxes
+    $(document).on('lity:ready', function(event, lightbox, trigger) {
+      var frameId = $(trigger).attr('data-trigger');
+      var width = $('#'+frameId).width();
+      $(lightbox).find('.lity-iframe-container').width(width);
+      $(lightbox).find('iframe').iFrameResize({
         heightCalculationMethod: isOldIE ? 'max' : 'lowestElement',
         autoResize: true,
         scrolling: true
