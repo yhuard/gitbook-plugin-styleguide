@@ -1,15 +1,15 @@
 <div class="styleguide">
   <ul class="nav nav-pills">
-    <li role="presentation" class="active"><a href="#" data-toggle="pill" data-trigger="{{ id }}frame" data-width="1200px">Large</a></li>
-    <li role="presentation"><a href="#" data-toggle="pill" data-trigger="{{ id }}frame" data-width="800px">Medium</a></li>
-    <li role="presentation"><a href="#" data-toggle="pill" data-trigger="{{ id }}frame" data-width="400px">Small</a></li>
+    {% for size in sizes %}
+    <li role="presentation"{% if loop.first %} class="active"{% endif %}><a href="#" data-toggle="pill" data-trigger="{{ id }}frame" data-width="{{ size.width }}">{{ size.title }}</a></li>
+    {% endfor %}
   </ul>
   <div class="preview">
     <div class="btn-open">
       <a href="#" data-lity data-lity-target="{{ url }}" data-trigger="{{ id }}frame"><i class="fa fa-search-plus"></i></a>
     </div>
     <div class="preview-frame">
-      <iframe id="{{ id }}frame" class="lazy" data-src="{{ url }}" width="1200px"></iframe>
+      <iframe id="{{ id }}frame" class="lazy" data-src="{{ url }}" style="width:{{ sizes[0].width }}"></iframe>
     </div>
   </div>
   <div class="tabs">

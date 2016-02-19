@@ -44,7 +44,19 @@ You can provide a custom configuration to the plugin in your book.json. Here's t
   "pluginsConfig": {
     "styleguide": {
       "base": "src",
-      "frame": "./tpl/frame.html"
+      "frame": "./tpl/frame.html",
+      "sizes": [
+        {
+          "title": "Desktop",
+          "width": "1200px"
+        }, {
+          "title": "Tablet",
+          "width": "800px"
+        }, {
+          "title": "Phone",
+          "width": "380px"
+        }
+      ]
     }
   }
 }

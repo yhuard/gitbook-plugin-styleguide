@@ -79,7 +79,7 @@ tbody.collapse.in {
   display: none;
   float: left;
   min-width: 160px;
-  padding: 5px 0 !important;
+  padding: 4px 0 !important;
   margin: 0 0 30px !important;
   list-style: none;
   font-size: 14px !important;
@@ -236,19 +236,19 @@ tbody.collapse.in {
 }
 .nav-tabs > li > a:hover {
   text-decoration: none !important;
-  border-bottom: 5px solid #4183c4;
+  border-bottom: 4px solid #4183c4;
 }
 .nav-tabs > li.active > a {
   color: #555555;
   background-color: #ffffff;
-  border-bottom: 5px solid #dddddd;
+  border-bottom: 4px solid #dddddd;
 }
 .nav-tabs > li.active > a:hover {
-  border-bottom: 5px solid #4183c4;
+  border-bottom: 4px solid #4183c4;
 }
 .nav-tabs > li.open > a, .nav-tabs > li.open > a:hover {
   text-decoration: none;
-  border-bottom: 5px solid #4183c4;
+  border-bottom: 4px solid #4183c4;
 }
 .nav-pills > li {
   float: left;
@@ -374,7 +374,7 @@ tbody.collapse.in {
 }
 
 .lity-iframe .lity-container {
-  max-width: 1200px !important;
+  max-width: 100% !important;
 }
 
 .lity-iframe-container {

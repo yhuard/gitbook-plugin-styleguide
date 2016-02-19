@@ -80,7 +80,8 @@ function template(tpl, id, currentFile, config, book) {
           scripts: scripts,
           styles: styles,
           id: id,
-          url: tpl
+          url: tpl,
+          sizes: config.sizes
         });
       })
       .catch(function logError(err) {
@@ -117,7 +118,19 @@ module.exports = {
         var config = defaults(this.book.config.get('pluginsConfig.styleguide'), {
           base: this.book.root,
           dest: this.book.options.output,
-          frame: path.resolve(__dirname, './templates/frame.html')
+          frame: path.resolve(__dirname, './templates/frame.html'),
+          sizes: [
+            {
+              title: 'Desktop',
+              width: '1200px'
+            }, {
+              title: 'Tablet',
+              width: '800px'
+            }, {
+              title: 'Phone',
+              width: '380px'
+            }
+          ]
         });
 
         if (this.generator === 'website') {
