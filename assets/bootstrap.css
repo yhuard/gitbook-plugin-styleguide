@@ -199,7 +199,7 @@ tbody.collapse.in {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 8px 12px 4px;
+  padding: 4px 12px 4px;
 }
 .nav > li > a:hover, .nav > li > a:focus {
   text-decoration: none;
@@ -254,7 +254,7 @@ tbody.collapse.in {
   float: left;
 }
 .nav-pills > li > a {
-  border-radius: 4px;
+  border-radius: 1px;
 }
 .nav-pills > li + li {
   margin-left: 2px;
@@ -335,7 +335,7 @@ tbody.collapse.in {
   text-decoration: none !important;
 }
 .styleguide .preview {
-  margin: 20px 15px 12px;
+  margin: 15px;
   border: 1px solid #eee;
   background-color: #f5f5f5;
   position: relative;
