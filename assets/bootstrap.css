@@ -373,18 +373,6 @@ tbody.collapse.in {
   overflow: visible;
 }
 
-.lity-iframe .lity-container {
-  max-width: 100% !important;
-}
-
-.lity-iframe-container {
-  margin: auto !important;
-}
-
-.lity-iframe-container iframe {
-  height: 0px;
-}
-
 .styleguide .btn-open {
   position: absolute;
   top: 4px;
@@ -409,4 +397,30 @@ tbody.collapse.in {
   line-height: 30px;
   font-size: 20px !important;
   padding-left: 4px;
+}
+
+
+.lity-iframe .lity-container {
+  max-width: 100%  !important;
+  margin: auto;
+  height: 100%;
+}
+
+.lity-iframe-container iframe {
+  height: 0px;
+}
+
+.lity-iframe-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+}
+
+.lity-content {
+  position: absolute;
+  top: 60px;
+  bottom: 40px;
 }

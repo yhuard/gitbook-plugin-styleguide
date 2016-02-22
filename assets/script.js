@@ -35,7 +35,8 @@ require(["gitbook"], function(gitbook) {
     $(document).on('lity:ready', function(event, lightbox, trigger) {
       var frameId = $(trigger).attr('data-trigger');
       var width = $('#'+frameId).width();
-      $(lightbox).find('.lity-iframe-container').width(width);
+      $(lightbox).find('.lity-container').width(width);
+      $(lightbox).find('iframe').width(width);
       $(lightbox).find('iframe').iFrameResize({
         heightCalculationMethod: isOldIE ? 'max' : 'lowestElement',
         autoResize: true,
