@@ -8,7 +8,10 @@
     "gitbook"
   ],
   "main": "index.js",
-  "version": "0.6.2",
+  "version": "0.7.0",
+  "scripts": {
+    "lint": "eslint src/framework/ scripts/; exit 0"
+  },
   "engines": {
     "gitbook": ">=2.5.0"
   },
@@ -19,14 +22,14 @@
   },
   "dependencies": {
     "front-matter": "^2.0.6",
-    "lodash": "^4.3.0",
+    "lodash": "^4.6.1",
     "mkdirp": "^0.5.1",
     "nunjucks": "^2.3.0",
     "q": "~1.4.1"
   },
   "devDependencies": {
-    "eslint": "^2.2.0",
-    "eslint-config-airbnb": "^6.0.1",
-    "eslint-plugin-react": "^4.0.0"
+    "eslint": "^2.3.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-react": "^4.2.1"
   }
 }
