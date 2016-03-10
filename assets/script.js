@@ -14,10 +14,17 @@ require(["gitbook"], function(gitbook) {
     });
 
     // Handles devices sizes
-    $('a[data-toggle="pill"]').on('click', function(e) {
+    $('a[data-toggle="pill"].viewport-pill').on('click', function(e) {
       var frameId = $(this).attr('data-trigger');
       var width = $(this).attr('data-width');
       $('#' + frameId).width(width);
+    });
+
+    // Handles tools
+    $('a.tools-a11y').on('click', function(e) {
+      var frameId = $(this).attr('data-trigger');
+      document.getElementById(frameId).contentWindow.a11yAudit();
+      e.preventDefault();
     });
 
     var isOldIE = (navigator.userAgent.indexOf("MSIE") !== -1); // Detect IE10 and below

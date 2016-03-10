@@ -1,8 +1,16 @@
 <div class="styleguide">
   <ul class="nav nav-pills">
     {% for size in sizes %}
-    <li role="presentation"{% if loop.first %} class="active"{% endif %}><a href="#" data-toggle="pill" data-trigger="{{ id }}frame" data-width="{{ size.width }}">{{ size.title }}</a></li>
+    <li role="presentation"{% if loop.first %} class="active"{% endif %}><a href="#" class="viewport-pill" data-toggle="pill" data-trigger="{{ id }}frame" data-width="{{ size.width }}">{{ size.title }}</a></li>
     {% endfor %}
+    <li role="presentation" class="dropdown pull-right">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        Tools <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#" class="tools-a11y" data-trigger="{{ id }}frame">Accessibility audit</a></li>
+      </ul>
+    </li>
   </ul>
   <div class="preview">
     <div class="btn-open">
