@@ -8,11 +8,11 @@ var q = require('q');
 var mkdirp = require('mkdirp');
 var defaults = require('lodash/defaults');
 
-function template(tpl, id, currentFile, config, book) {
+function template(tpl, id, currentFile, config) {
   try {
     return q()
       .then(function readTemplate() {
-        return fs.readFileSync(path.resolve(config.base, path.dirname(currentFile), tpl), 'utf8');
+        return fs.readFileSync(path.resolve(config.src, path.dirname(currentFile), tpl), 'utf8');
       })
       .then(function processTemplate(data) {
         var content = {};
@@ -28,7 +28,7 @@ function template(tpl, id, currentFile, config, book) {
         var templateOutputFile = path.resolve(config.dest, path.dirname(currentFile), tpl);
         var frameFile = path.isAbsolute(config.frame) ?
           config.frame :
-          path.resolve(book.root, config.frame);
+          path.resolve(config.root, config.frame);
 
         var templateContent = env.render(frameFile, {
           content: content.body,
@@ -49,7 +49,7 @@ function template(tpl, id, currentFile, config, book) {
         var scripts = [];
         scriptsToInclude.forEach(function readNextFile(file) {
           var scriptContent = fs.readFileSync(
-            path.resolve(config.base, path.dirname(currentFile), path.dirname(tpl), file)
+            path.resolve(config.src, path.dirname(currentFile), path.dirname(tpl), file)
           );
           scripts.push({
             content: scriptContent,
@@ -65,7 +65,7 @@ function template(tpl, id, currentFile, config, book) {
         var styles = [];
         stylesToInclude.forEach(function readNextFile(file) {
           var scriptContent = fs.readFileSync(
-            path.resolve(config.base, path.dirname(currentFile), path.dirname(tpl), file)
+            path.resolve(config.src, path.dirname(currentFile), path.dirname(tpl), file)
           );
           styles.push({
             content: scriptContent,
@@ -85,12 +85,12 @@ function template(tpl, id, currentFile, config, book) {
         });
       })
       .catch(function logError(err) {
-        console.log(err);
+        console.error(err);
         process.exit(1);
       });
   } catch (err) {
-    console.log(err);
-    process.exit(1);
+    console.error(err);
+    return process.exit(1);
   }
 }
 
@@ -98,6 +98,7 @@ module.exports = {
   website: {
     assets: './assets',
     js: [
+      'jquery.min.js',
       'bootstrap.js',
       'iframeResizer.js',
       'lity.min.js',
@@ -116,8 +117,9 @@ module.exports = {
         var id = path.basename(filename, '.html') + '-';
 
         var config = defaults(this.book.config.get('pluginsConfig.styleguide'), {
-          base: this.book.root,
-          dest: this.book.options.output,
+          src: this.book.resolve(''),
+          root: this.book.resolve(''),
+          dest: this.book.output.root(),
           frame: path.resolve(__dirname, './templates/frame.html'),
           sizes: [
             {
@@ -133,16 +135,21 @@ module.exports = {
           ]
         });
 
-        if (this.generator === 'website') {
+        if (this.output.name === 'website') {
           return q()
             .then(function write() {
-              return template(filename, id, that.ctx.file.path, config, that.book);
+              return template(filename, id, that.ctx.ctx.file.path, config);
             });
         }
 
         return q()
           .then(function read() {
-            return fs.readFileSync(config.base, path.dirname(that.ctx.file.path), filename, 'utf8');
+            return fs.readFileSync(
+              config.src,
+              path.dirname(that.ctx.ctx.file.path),
+              filename,
+              'utf8'
+            );
           })
           .then(function write(content) {
             return '<pre><code class="lang-html">' + content + '</code></pre>';

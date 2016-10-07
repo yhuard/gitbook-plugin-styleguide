@@ -10,10 +10,10 @@
   "main": "index.js",
   "version": "0.7.0",
   "scripts": {
-    "lint": "eslint src/framework/ scripts/; exit 0"
+    "lint": "eslint ."
   },
   "engines": {
-    "gitbook": ">=2.5.0"
+    "gitbook": ">=3.2.0"
   },
   "homepage": "https://github.com/yhuard/gitbook-plugin-styleguide",
   "repository": {
@@ -21,15 +21,15 @@
     "url": "https://github.com/yhuard/gitbook-plugin-styleguide.git"
   },
   "dependencies": {
-    "front-matter": "^2.0.6",
-    "lodash": "^4.6.1",
+    "front-matter": "^2.1.0",
+    "lodash": "^4.16.3",
     "mkdirp": "^0.5.1",
-    "nunjucks": "^2.3.0",
+    "nunjucks": "^2.5.2",
     "q": "~1.4.1"
   },
   "devDependencies": {
-    "eslint": "^2.3.0",
-    "eslint-config-airbnb": "^6.1.0",
-    "eslint-plugin-react": "^4.2.1"
+    "eslint": "^3.7.1",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^1.16.0"
   }
 }

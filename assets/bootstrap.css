@@ -406,17 +406,17 @@ tbody.collapse.in {
   height: 100%;
 }
 
-.lity-iframe-container iframe {
-  height: 0px;
-}
-
 .lity-iframe-container {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  height: 100%;
+}
+
+.lity-iframe-container iframe {
+  height: 0;
+  background-color: #FFF;
 }
 
 .lity-content {
