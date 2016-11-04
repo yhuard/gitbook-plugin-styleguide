@@ -22,9 +22,16 @@
   </div>
   <div class="tabs">
     <ul class="nav nav-tabs">
+        {% if firstTabActive %}
         <li class="active">
             <a href="#{{ id }}markup" data-toggle="tab">HTML</a>
         </li>
+        {% else %}
+        <li>
+          <a href="#{{ id }}markup" data-toggle="tab">HTML</a>
+        </li>
+        {% endif %}
+
         {% if js %}
         <li>
             <a href="#{{ id }}js" data-toggle="tab">JS</a>
@@ -53,9 +60,16 @@
         {% endif %}
     </ul>
     <div class="tab-content">
+        {% if firstTabActive %}
         <div class="tab-pane active" id="{{ id }}markup">
             <pre><code class="lang-html">{{ markup | escape }}</code></pre>
         </div>
+        {% else %}
+        <div class="tab-pane" id="{{ id }}markup">
+          <pre><code class="lang-html">{{ markup | escape }}</code></pre>
+        </div>
+        {% endif %}
+
         {% if js %}
         <div class="tab-pane" id="{{ id }}js">
             <pre><code class="lang-javascript">{{ js | escape }}</code></pre>

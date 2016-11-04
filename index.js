@@ -73,6 +73,14 @@ function template(tpl, id, currentFile, config) {
           });
         });
 
+        // By default show the first tab open
+        var firstTabActive = true;
+
+        // Allow configuration to override defaults
+        if (config.firstTabActive === false) {
+          firstTabActive = false;
+        }
+
         // Render the whole styleguide section
         return env.render(path.resolve(__dirname, './templates/website.html'), {
           markup: content.body,
@@ -81,7 +89,8 @@ function template(tpl, id, currentFile, config) {
           styles: styles,
           id: id,
           url: tpl,
-          sizes: config.sizes
+          sizes: config.sizes,
+          firstTabActive: firstTabActive,
         });
       })
       .catch(function logError(err) {
