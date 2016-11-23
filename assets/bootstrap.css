@@ -233,6 +233,7 @@ tbody.collapse.in {
 .nav-tabs > li > a {
   line-height: 1.42857143;
   text-decoration: none !important;
+  border-bottom: 4px solid transparent;
 }
 .nav-tabs > li > a:hover {
   text-decoration: none !important;
