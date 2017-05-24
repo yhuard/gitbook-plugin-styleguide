@@ -24,7 +24,7 @@
     "front-matter": "^2.1.1",
     "lodash": "^4.17.2",
     "mkdirp": "^0.5.1",
-    "nunjucks": "^3.0.0",
+    "nunjucks": "^3.0.1",
     "q": "~1.4.1"
   },
   "devDependencies": {
