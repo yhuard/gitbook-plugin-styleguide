@@ -1,4 +1,4 @@
-# GitBook Style Guide Plugin
+# [DEPRECATED] GitBook Style Guide Plugin
 
 This plugin is meant to be used to generate the styleguide for European Commission theme.
 
